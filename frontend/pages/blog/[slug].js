@@ -12,6 +12,7 @@ import {
 } from "../../queries/postsQueries";
 import RecentPosts from "../../components/RecentPosts";
 import BlogPostHeroImage from "../../components/BlogPostHeroImage";
+import Layout from "../../components/Layout";
 
 export default function BlogPage({ post, posts }) {
   return (
@@ -29,7 +30,7 @@ export default function BlogPage({ post, posts }) {
             }}
           >
             <Typography variant="h3" component="h1" sx={{ color: "white" }}>
-              Tytuł artykułu
+              {post.title}
             </Typography>
           </Container>
         </Box>
@@ -39,14 +40,16 @@ export default function BlogPage({ post, posts }) {
               <Grid item xs={12} md={8}>
                 <Post data={post} />
               </Grid>
-              <Grid
-                item
-                xs={12}
-                md={4}
-                sx={{ display: { xs: "none", md: "block" } }}
-              >
-                <RecentPosts posts={posts} />
-              </Grid>
+              {posts.length > 0 && (
+                <Grid
+                  item
+                  xs={12}
+                  md={4}
+                  sx={{ display: { xs: "none", md: "block" } }}
+                >
+                  <RecentPosts posts={posts} />
+                </Grid>
+              )}
             </Grid>
           </Container>
         </Box>
@@ -54,6 +57,10 @@ export default function BlogPage({ post, posts }) {
     </PageTransition>
   );
 }
+
+BlogPage.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>;
+};
 
 export async function getServerSideProps(context) {
   const apolloClient = initializeApollo();

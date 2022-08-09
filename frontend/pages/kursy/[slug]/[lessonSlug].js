@@ -1,16 +1,49 @@
 import { initializeApollo, addApolloState } from "../../../lib/apolloClient";
 
-import { GET_SINGLE_LESSON_QUERY } from "../../../queries/coursesQueries";
+import Layout from "../../../components/Layout";
+import CourseDrawer from "../../../components/CourseDrawer";
+import YouTube from "react-youtube";
+import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
 
-export default function Lesson({ lesson }) {
-  console.log("lesson", lesson);
+import { GET_SINGLE_LESSON_QUERY } from "../../../queries/coursesQueries";
+import PageTransition from "../../../components/PageTransition";
+
+export default function LessonPage({ lesson }) {
+  const opts = {
+    height: "390",
+    width: "640",
+    playerVars: {
+      autoplay: 1
+    }
+  };
+
   if (!lesson) return <p>Brak lekcji do wyświetlenia</p>;
+
   return (
-    <>
-      <p>Lekcja nr {lesson?.title}</p>
-    </>
+    <PageTransition>
+      <Box sx={{ flexGrow: 1, p: 3 }}>
+        <YouTube
+          className="container-styles"
+          iframeClassName="iframe-styles"
+          videoId={lesson.youtube}
+          opts={opts}
+        />
+      </Box>
+    </PageTransition>
   );
 }
+
+LessonPage.getLayout = function getLayout(page) {
+  return (
+    <Layout>
+      <Box component="article" style={{ display: "flex" }}>
+        {page}
+        <CourseDrawer />
+      </Box>
+    </Layout>
+  );
+};
 
 export async function getServerSideProps(context) {
   const apolloClient = initializeApollo();

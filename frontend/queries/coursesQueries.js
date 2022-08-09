@@ -20,10 +20,18 @@ export const GET_SINGLE_COURSE_QUERY = gql`
     course(where: { slug: $slug }) {
       id
       title
-      lessons {
+      subtitle
+      description
+      chapters {
         id
-        number
-        title
+        name
+        mirror
+        description
+        lessons {
+          id
+          number
+          title
+        }
       }
     }
   }
@@ -50,12 +58,6 @@ export const GET_SINGLE_LESSON_QUERY = gql`
       number
       title
       youtube
-      course {
-        lessons(orderBy: { number: asc }) {
-          number
-          title
-        }
-      }
     }
   }
 `;

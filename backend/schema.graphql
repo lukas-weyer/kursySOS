@@ -430,6 +430,8 @@ input UserRelateToManyForCreateInput {
 type Chapter {
   id: ID!
   name: String
+  number: Int
+  mirror: Boolean
   description: String
   lessons(
     where: LessonWhereInput! = {}
@@ -457,19 +459,41 @@ input ChapterWhereInput {
   NOT: [ChapterWhereInput!]
   id: IDFilter
   name: StringFilter
+  number: IntFilter
+  mirror: BooleanFilter
   description: StringFilter
   lessons: LessonManyRelationFilter
   course: CourseManyRelationFilter
 }
 
+input IntFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: IntFilter
+}
+
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
+}
+
 input ChapterOrderByInput {
   id: OrderDirection
   name: OrderDirection
+  number: OrderDirection
+  mirror: OrderDirection
   description: OrderDirection
 }
 
 input ChapterUpdateInput {
   name: String
+  number: Int
+  mirror: Boolean
   description: String
   lessons: LessonRelateToManyForUpdateInput
   course: CourseRelateToManyForUpdateInput
@@ -482,6 +506,8 @@ input ChapterUpdateArgs {
 
 input ChapterCreateInput {
   name: String
+  number: Int
+  mirror: Boolean
   description: String
   lessons: LessonRelateToManyForCreateInput
   course: CourseRelateToManyForCreateInput
@@ -494,13 +520,7 @@ type Lesson {
   title: String
   status: String
   youtube: String
-  course(
-    where: CourseWhereInput! = {}
-    orderBy: [CourseOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Course!]
-  courseCount(where: CourseWhereInput! = {}): Int
+  course: Course
   chapter: Chapter
 }
 
@@ -519,19 +539,8 @@ input LessonWhereInput {
   title: StringFilter
   status: StringNullableFilter
   youtube: StringFilter
-  course: CourseManyRelationFilter
+  course: CourseWhereInput
   chapter: ChapterWhereInput
-}
-
-input IntFilter {
-  equals: Int
-  in: [Int!]
-  notIn: [Int!]
-  lt: Int
-  lte: Int
-  gt: Int
-  gte: Int
-  not: IntFilter
 }
 
 input LessonOrderByInput {
@@ -549,8 +558,14 @@ input LessonUpdateInput {
   title: String
   status: String
   youtube: String
-  course: CourseRelateToManyForUpdateInput
+  course: CourseRelateToOneForUpdateInput
   chapter: ChapterRelateToOneForUpdateInput
+}
+
+input CourseRelateToOneForUpdateInput {
+  create: CourseCreateInput
+  connect: CourseWhereUniqueInput
+  disconnect: Boolean
 }
 
 input ChapterRelateToOneForUpdateInput {
@@ -570,8 +585,13 @@ input LessonCreateInput {
   title: String
   status: String
   youtube: String
-  course: CourseRelateToManyForCreateInput
+  course: CourseRelateToOneForCreateInput
   chapter: ChapterRelateToOneForCreateInput
+}
+
+input CourseRelateToOneForCreateInput {
+  create: CourseCreateInput
+  connect: CourseWhereUniqueInput
 }
 
 input ChapterRelateToOneForCreateInput {

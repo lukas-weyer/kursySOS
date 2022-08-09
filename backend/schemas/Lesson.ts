@@ -33,7 +33,7 @@ export const Lesson = list({
     youtube: text(),
     course: relationship({
       ref: "Course.lessons",
-      many: true
+      many: false
     }),
     chapter: relationship({
       ref: "Chapter.lessons",

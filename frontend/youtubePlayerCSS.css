@@ -1,0 +1,13 @@
+.container-styles {
+  overflow: hidden;
+  height: 0;
+  position: relative;
+  padding-bottom: 56.25%;
+}
+.iframe-styles {
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}

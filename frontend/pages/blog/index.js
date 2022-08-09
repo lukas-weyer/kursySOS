@@ -3,6 +3,7 @@ import { initializeApollo, addApolloState } from "../../lib/apolloClient";
 import { GET_ALL_POSTS_QUERY } from "../../queries/postsQueries";
 
 import PageTransition from "../../components/PageTransition";
+import Layout from "../../components/Layout";
 
 export default function PostsPage({ posts }) {
   return (
@@ -15,6 +16,10 @@ export default function PostsPage({ posts }) {
     </PageTransition>
   );
 }
+
+PostsPage.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>;
+};
 
 export async function getServerSideProps() {
   const apolloClient = initializeApollo();

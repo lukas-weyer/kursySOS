@@ -8,3 +8,18 @@ export const GET_ALL_USERS_QUERY = gql`
     }
   }
 `;
+
+export const CURRENT_USER_QUERY = gql`
+  query CurrentUser {
+    authenticatedItem {
+      ... on User {
+        id
+        name
+        email
+        password {
+          isSet
+        }
+      }
+    }
+  }
+`;

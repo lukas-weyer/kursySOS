@@ -28,19 +28,19 @@ export default function CourseDescriptionCard({
           md={6}
           sx={{ padding: "32px 16px", order: mirror ? "1" : "0" }}
         >
-          <Box
-            sx={{
-              width: "100%",
-              height: "100%",
-              boxShadow: "rgb(140 152 164 / 28%) 0px 10px 40px 10px"
-            }}
-            component={motion.div}
-            initial={{ opacity: 0, x: mirror ? 50 : -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ type: "spring", stiffness: 30 }}
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            {image && (
+          {image && (
+            <Box
+              sx={{
+                width: "100%",
+                height: "100%",
+                boxShadow: "rgb(140 152 164 / 28%) 0px 10px 40px 10px"
+              }}
+              component={motion.div}
+              initial={{ opacity: 0, x: mirror ? 50 : -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ type: "spring", stiffness: 30 }}
+              viewport={{ once: true, margin: "-100px" }}
+            >
               <Image
                 src={image}
                 alt="kadr z kursu"
@@ -52,8 +52,8 @@ export default function CourseDescriptionCard({
                   borderRadius: "4px"
                 }}
               />
-            )}
-          </Box>
+            </Box>
+          )}
         </Grid>
         <Grid item xs={12} md={6} sx={{ padding: "32px 16px" }}>
           <Box
@@ -81,7 +81,7 @@ export default function CourseDescriptionCard({
                     <ListItemIcon>
                       <CheckBoxIcon color="secondary" />
                     </ListItemIcon>
-                    <ListItemText>{lesson.subject}</ListItemText>
+                    <ListItemText>{`Lekcja ${lesson.number}. ${lesson.title}`}</ListItemText>
                   </ListItem>
                 ))}
             </List>

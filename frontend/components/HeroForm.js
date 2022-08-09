@@ -13,11 +13,11 @@ import * as yup from "yup";
 
 const validationSchema = yup.object({
   name: yup
-    .string("Podaj swoje imię.")
+    .string()
     .min(3, "Imię musi składać się z minimum 3 liter.")
     .required("Podanie imienia jest wymagane"),
   email: yup
-    .string("Podaj ades email.")
+    .string()
     .email("Podałeś niepoprwny adres email.")
     .required("Podanie adresu email jest wymagane.")
 });
@@ -46,6 +46,7 @@ export default function HeroForm() {
           justifyContent="center"
           direction="column"
           onSubmit={formik.handleSubmit}
+          method="POST"
         >
           <Grid item justifyContent="center">
             <TextField

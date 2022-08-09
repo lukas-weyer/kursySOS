@@ -42,13 +42,15 @@ model Course {
   slug        String    @unique @default("")
   description String    @default("")
   chapters    Chapter[] @relation("Chapter_course")
-  lessons     Lesson[]  @relation("Course_lessons")
+  lessons     Lesson[]  @relation("Lesson_course")
   users       User[]    @relation("Course_users")
 }
 
 model Chapter {
   id          String   @id @default(cuid())
   name        String   @default("")
+  number      Int
+  mirror      Boolean  @default(false)
   description String   @default("")
   lessons     Lesson[] @relation("Lesson_chapter")
   course      Course[] @relation("Chapter_course")
@@ -61,10 +63,12 @@ model Lesson {
   title      String   @default("")
   status     String?  @default("draft")
   youtube    String   @default("")
-  course     Course[] @relation("Course_lessons")
+  course     Course?  @relation("Lesson_course", fields: [courseId], references: [id])
+  courseId   String?  @map("course")
   chapter    Chapter? @relation("Lesson_chapter", fields: [chapterId], references: [id])
   chapterId  String?  @map("chapter")
 
+  @@index([courseId])
   @@index([chapterId])
 }
 

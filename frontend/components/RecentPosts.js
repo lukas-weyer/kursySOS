@@ -6,18 +6,23 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import Box from "@mui/system/Box";
+import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
 import wezwanieZRM from "../public/wezwanieZRM.png";
 import Image from "next/future/image";
 import { Button } from "@mui/material";
 import Link from "next/link";
-import { Link as MUILink } from "@mui/material";
 
 export default function RecentPosts({ posts }) {
   return (
-    <Paper variant="outlined" sx={{ width: "100%", padding: "16px" }}>
+    <Paper
+      variant="outlined"
+      sx={{ padding: "16px", overflow: "hidden", marginBottom: "2rem" }}
+    >
+      <Typography variant="h6" gutterBottom>
+        Najnowsze posty
+      </Typography>
       <Grid container direction="column" rowSpacing={2}>
         {posts.map((post) => (
           <Grid

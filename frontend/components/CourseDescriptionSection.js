@@ -44,7 +44,9 @@ const lessons3 = [
   }
 ];
 
-export default function CourseDescriptionSection() {
+export default function CourseDescriptionSection({ course }) {
+  const { chapters } = course;
+  console.log("chapters", chapters);
   return (
     <Box component="section" sx={{ backgroundColor: "rgb(247, 250, 255)" }}>
       <Container sx={{ padding: "64px 16px" }}>
@@ -64,38 +66,30 @@ export default function CourseDescriptionSection() {
             <Typography variant="h3" component="h3" align="center" mb={4}>
               Czego nauczysz się podczas kursu
             </Typography>
-            <Typography
-              variant="h6"
-              component="h6"
-              align="center"
-              sx={{
-                maxWidth: "640px",
-                color: "rgb(100, 110, 115)"
-              }}
-            >
-              Poprowadzimy Cię krok po kroku dzięki czemu poznasz i opanujesz
-              zasady udzielania Pierwszej Pomocy.
-            </Typography>
+            {course?.subtitle && (
+              <Typography
+                variant="h6"
+                component="h6"
+                align="center"
+                sx={{
+                  maxWidth: "640px",
+                  color: "rgb(100, 110, 115)"
+                }}
+              >
+                {course.subtitle}
+              </Typography>
+            )}
           </Grid>
           <Grid item container direction="column">
-            <CourseDescriptionCard
-              title="Jak wezwać pomoc"
-              image={wezwanieZRM}
-              lessons={lessons1}
-              description="Wszystko co musisz wiedzieć aby bezproblemowo wezwać pomoc
-              odpowiednich służb."
-            />
-            <CourseDescriptionCard
-              mirror
-              title="Osoba nieprzytomna"
-              image={nieprzytomny}
-              lessons={lessons2}
-            />
-            <CourseDescriptionCard
-              title="Resuscytacja"
-              image={resuscytacja}
-              lessons={lessons3}
-            />
+            {chapters?.map((chapter) => (
+              <CourseDescriptionCard
+                key={chapter.id}
+                title={chapter.name}
+                lessons={chapter.lessons}
+                mirror={chapter.mirror}
+                description={chapter.description}
+              />
+            ))}
           </Grid>
         </Grid>
       </Container>
